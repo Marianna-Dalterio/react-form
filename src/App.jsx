@@ -25,7 +25,15 @@ function App() {
     event.preventDefault();
     setArticles([...articles, { id: Date.now(), title: newArticle }]);
     // Resetta lo stato dell'input (svuota il campo dopo l'aggiunta)
-    setNewItem('');
+    setNewArticle('');
+  }
+  //funzione per la rimozione di un elemento dalla lista
+  const handleRemove = (idRemove) => {
+    // Creazione del nuovo array con filter methof
+    const listaAggiornata = articles.filter(item => item.id !== idRemove);
+
+    // 2. Aggiornamento dello stato
+    setArticles(listaAggiornata);
   }
 
   return (
@@ -43,9 +51,13 @@ function App() {
         <button type="submit">Aggiungi</button>
       </form>
 
-      {/* creo lista articoli che mostri solo il titolo */}
+      {/* creo lista articoli che mostri solo il titolo e aggiungo bottone rimuovi per ogni elemento */}
       <ul>
-        {articles.map((item) => <li key={item.id}>{item.title}</li>)}
+        {articles.map((item) => (<li key={item.id}>{item.title}
+          <button onClick={() => handleRemove(item.id)}>
+            Rimuovi
+          </button>
+        </li>))}
       </ul>
 
     </>
